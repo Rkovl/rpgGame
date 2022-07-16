@@ -1,12 +1,67 @@
 import random
-# from dataclasses import dataclass
-# import sys
 import os
-# sys.path.append(os.path.abspath("/home/ryank/DigitalCrafts/Projects/rpgGame/rpg_game"))
 from Data import *
 # THE HOLY TWENTY
-# class Battle:
+
+############################################    CLASSES     #####################################################
+
+class Units:
+    def __init__(self,name,health,power,dodge,gold):
+        self.name = name
+        self.health = health
+        self.power = power
+        self.dodge = dodge
+        self.gold = gold
+        self.inventory = []
+        
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        if A < unit.dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            damage = random.randint(int(self.power / 2), self.power)
+            unit.health -= damage   #damage to target of attacks health based on power range
+            print("The {} does {} damage.".format(self.name, damage))
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False
+        
+       
+    def alive(self):
+        if self.health > 0:
+            return True
+        else:
+            return False
+        
+    def status(self):
+        print("{} has {} health and {} power.".format(self.name,self.health, self.power))
+        
+    def equip(self):
+        if swordItem in self.inventory:
+            sword(self)
+
+        if capeItem in self.inventory:
+            cape(self)
+            
+class Player(Units):
+    pass           
+            
+class Enemy(Units):
+    pass         
+            
+###########################################     COMBAT      ######################################################      
+                       
+def startCombat(Player,Enemy):
+    global pcBaseHealth, pcBasePower, pcBaseDodge
+    pcBaseHealth = Player.health
+    pcBasePower = Player.power
+    pcBaseDodge = Player.dodge
+    Player.equip()
+    Enemy.equip()
+    
 def combat(Player,Enemy):
+    startCombat(Player,Enemy)
     while Enemy.alive() and Player.alive():
         Player.status()
         Enemy.status()
@@ -32,54 +87,9 @@ def combat(Player,Enemy):
             Enemy.attack(Player)
     if Player.alive():
         Player.gold = Player.gold + Enemy.gold
-
-class Units:
-    def __init__(self,name,health,power,dodge,gold):
-        self.name = name
-        self.health = health
-        self.power = power
-        self.dodge = dodge
-        self.gold = gold
-        self.equipment = []
-        
-    def attack(self,unit): 
-        A = random.randint(1,100)
-        if A < unit.dodge:
-            print("The {} dodged!!".format(unit.name))
-            return True
-        else:
-            damage = random.randint(int(self.power / 2), self.power)
-            unit.health -= damage   #damage to target of attacks health based on power range
-            print("The {} does {} damage.".format(self.name, damage))
-            if unit.alive() == False:
-                print(f"{unit.name} is dead.")
-            return False
-        
-       
-    def alive(self):
-        if self.health > 0:
-            return True
-        else:
-            return False
-        
-    def status(self):
-        print("{} has {} health and {} power.".format(self.name,self.health, self.power))
-        
-
-class Player(Units):
-    pass
-
-class Enemy(Units):
-    pass
-
-class Skills:
-    def sword():
-        Hero.power = Hero.power + 1
-        print("sword that gives +1 power")
-        
-    def cape():
-        Hero.dodge = Hero.dodge + 5
-        print("cape that gives +5 dodge")
+        Player.health = pcBaseHealth
+        Player.power = pcBasePower
+        Player.Dodge = pcBaseDodge
 
 def randomEnemy(enemylist):     
     return random.choice(enemylist)
@@ -93,15 +103,22 @@ enemylist = [Enemy("Goblin",6,2,20,5),
                           Enemy("Rat",1,1,75,5),
                           ]
 
-paths = {"combat":combat(Hero,randomEnemy(enemylist)),
-         "shop":shop(),
-         "buff":buff(),
-         "risk":risk(),
-         "unknown":unknown()
-}
+#########################################    PATHS     #############################################################
 
-# currentEnemy = randomEnemy(enemylist)
+def shop():
+    Hero.inventory.append(sword)
+    print("shop enter")
+    print(Hero.inventory)
+    combat(Hero,randomEnemy(enemylist))
+    # path()
+def buff():
+    pass
+def risk():
+    pass
+def unknown():
+    pass
 
+#######################################     MAIN      ##############################################################
 
 def main():
     os.system('clear')
@@ -120,16 +137,21 @@ Welcome
         quit()
     else:
         main()
-        
-    # print(currentEnemy.name)
-    # combat(Hero,currentEnemy)
-    
-    
+           
 def start():
     os.system('clear')
     path()
-    # combat(Hero,randomEnemy(enemylist))
-    
+ 
+
+
+paths = {"combat":combat,
+         "shop":shop,
+         "buff":buff,
+         "risk":risk,
+         "unknown":unknown
+}
+
+ 
 def path():
     path1Name, path1Fun = random.choice(list(paths.items()))
     path2Name, path2Fun = random.choice(list(paths.items()))
@@ -141,8 +163,28 @@ Welcome
 3.) {path3Name} 
     
     """)
-    
+    if pathInput == "1":
+        if path1Fun == combat:
+            path1Fun(Hero,randomEnemy(enemylist))
+        else:
+            path1Fun()
+    elif pathInput == "2":
+        if path2Fun == combat:
+            path2Fun(Hero,randomEnemy(enemylist))
+        else:
+            path2Fun()
+    elif pathInput == "3":
+        if path3Fun == combat:
+            path3Fun(Hero,randomEnemy(enemylist))
+        else:
+            path3Fun()
+    else:
+        path()
+        
+        
 main()
+
+
 # Fight = Battle.combat(Hero,Goblin)
 
 # print(Enemy.enemyList)
