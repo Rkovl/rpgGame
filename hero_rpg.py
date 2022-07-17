@@ -61,7 +61,100 @@ class Player(Units):
             
 class Enemy(Units):
     pass         
-         
+
+class Goblin(Enemy):
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        if A < unit.dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            damage = random.randint(int(self.power / 4), self.power)
+            unit.health -= damage   #damage to target of attacks health based on power range
+            print("The {} does {} damage.".format(self.name, damage))
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False     
+
+class Zombie(Enemy):
+    def alive(self):
+        if self.health > 0:
+            return True
+        else:
+            A = random.randint(1,100)
+            if A <= 10:
+                self.health = 1
+                return True
+            else:
+                return False
+
+class Skeleton(Enemy):
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        if A < unit.dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            B = random.randint(1,100)
+            damage = random.randint(int(self.power / 2), self.power)
+            unit.health -= damage   #damage to target of attacks health based on power range
+            print("The {} does {} damage.".format(self.name, damage))
+            if B <= 10:
+                unit.health -= 1
+                print(f"The {self.name}s attack splintered doing 1 additional damage")
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False   
+
+class Orc(Enemy):
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        if A < unit.dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            B = random.randint(1,100)
+            if B <= 25:
+                charge = 2
+                print(f"The {self.name} is charging")
+            else:
+                damage = random.randint(int(self.power / 2), self.power)
+                unit.health -= damage*charge   #damage to target of attacks health based on power range
+                print("The {} does {} damage.".format(self.name, damage*charge))
+                charge = 1
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False   
+
+class Rat(Enemy):
+    def attack(self,unit): 
+        A = random.randint(1,200)
+        if A < unit.dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            damage = random.randint(int(self.power / 2), self.power)
+            unit.health -= damage   #damage to target of attacks health based on power range
+            print("The {} does {} damage.".format(self.name, damage))
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False    
+   
+class Vampire(Enemy):
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        if A < unit.dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            damage = random.randint(int(self.power / 4), self.power)
+            unit.health -= damage   #damage to target of attacks health based on power range
+            self.health = self.health + 2
+            print("The {} does {} damage and healed 2.".format(self.name, damage))
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False 
+   
 class Boss(Enemy):
     pass   
 ###########################################     COMBAT      ######################################################      
@@ -114,11 +207,12 @@ def randomEnemy(enemylist):
 Hero = Player("Hero",10,5,0,10,0)
 dLord = Boss("Necromancer",50,10,5,25,100)
 
-enemylist = [Enemy("Goblin",6,2,0,20,5), 
-                          Enemy("Zombie",20,1,1,5,5), 
-                          Enemy("Skeleton",2,10,0,10,5), 
-                          Enemy("Orc",12,4,3,5,10), 
-                          Enemy("Rat",1,1,0,75,5),
+enemylist = [Goblin("Goblin",6,4,0,20,5), 
+                          Zombie("Zombie",20,1,1,5,5), 
+                          Skeleton("Skeleton",2,10,0,10,5), 
+                          Orc("Orc",12,4,3,5,10), 
+                          Rat("Rat",1,1,0,75,5),
+                          Vampire("Vampire",8,3,0,25,10)
                           ]
 
 #########################################    PATHS     #############################################################
@@ -276,32 +370,29 @@ Welcome
 main()
 
 
-# Fight = Battle.combat(Hero,Goblin)
 
-# print(Enemy.enemyList)
 
+#TODO
 
 # class Skills:
 #     pass
 
-
-# def youLose():
+# def youLose():*
 #     pass
 
-# def youWin():
+# def youWin():*
 #     pass
-# equipment = []
-# def checkequip
-# sword = power + 1
-# equpment if have sword + sword power
-# kill = sword power + 1
 
+#Max HP*
 
+#Lives*
 
-# enemyList = {
-#     "Goblin" : Enemy("Goblin",6,2),
-#     "Zombie" : Enemy("Zombie",20,1),
-#     "Skeleton" : Enemy("Skeleton",2,10),
-#     "Orc" : Enemy("Orc",12,4),
-#     "Rat" : Enemy("Rat",1,1),
-# }
+#Player to Enemy*
+
+#more enemies
+
+#fix paths*
+
+#flavor text
+
+#info Text*

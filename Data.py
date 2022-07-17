@@ -8,6 +8,9 @@
 #                           Enemy("Orc",12,4), 
 #                           Enemy("Rat",1,1),
 #                           ]
+charge = 1
+
+
 
 class Equipment:
     def __init__(self,name,description,cost):
@@ -22,6 +25,16 @@ item4 = Equipment("Havels Armor", "This armor gives you +2 to armor",10)
 item5 = Equipment("BloodThirster", "This sword gives you +1 to power per enemy fought",15)
 bloodThirster = 0
 item6 = Equipment("Midus's Crown", "This crown gives you +1 to gold per enemy encounter",15)
+
+shopList = [
+    item1,
+    item2,
+    item3,
+    item4,
+    item5,
+    item6
+]
+
 
 def itemF1(unit):
     unit.power = unit.power + 2
@@ -42,12 +55,3 @@ def itemF5(unit):
     
 def itemF6(unit):
     unit.gold = unit.gold + 1
-    
-shopList = [
-    item1,
-    item2,
-    item3,
-    item4,
-    item5,
-    item6
-]
