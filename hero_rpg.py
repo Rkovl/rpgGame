@@ -2,14 +2,15 @@ import random
 import os
 from Data import *
 # THE HOLY TWENTY
-
+lives = 20
 ############################################    CLASSES     #####################################################
 
 class Units:
-    def __init__(self,name,health,power,dodge,gold):
+    def __init__(self,name,health,power,armor,dodge,gold):
         self.name = name
         self.health = health
         self.power = power
+        self.armor = armor
         self.dodge = dodge
         self.gold = gold
         self.inventory = []
@@ -26,8 +27,7 @@ class Units:
             if unit.alive() == False:
                 print(f"{unit.name} is dead.")
             return False
-        
-       
+              
     def alive(self):
         if self.health > 0:
             return True
@@ -38,18 +38,32 @@ class Units:
         print("{} has {} health and {} power.".format(self.name,self.health, self.power))
         
     def equip(self):
-        if swordItem in self.inventory:
-            sword(self)
+        if item1 in self.inventory:
+            itemF1(self)
 
-        if capeItem in self.inventory:
-            cape(self)
+        if item2 in self.inventory:
+            itemF2(self)
+        
+        if item3 in self.inventory:
+            itemF3(self)
+            
+        if item4 in self.inventory:
+            itemF4(self)
+            
+        if item5 in self.inventory:
+            itemF5(self)
+            
+        if item6 in self.inventory:
+            itemF6(self)
             
 class Player(Units):
     pass           
             
 class Enemy(Units):
     pass         
-            
+         
+class Boss(Enemy):
+    pass   
 ###########################################     COMBAT      ######################################################      
                        
 def startCombat(Player,Enemy):
@@ -91,32 +105,104 @@ def combat(Player,Enemy):
         Player.power = pcBasePower
         Player.Dodge = pcBaseDodge
 
+def bossCombat():
+    combat(Hero,dLord)
+
 def randomEnemy(enemylist):     
     return random.choice(enemylist)
 
-Hero = Player("Hero",10,5,10,0)
+Hero = Player("Hero",10,5,0,10,0)
+dLord = Boss("Necromancer",50,10,5,25,100)
 
-enemylist = [Enemy("Goblin",6,2,20,5), 
-                          Enemy("Zombie",20,1,5,5), 
-                          Enemy("Skeleton",2,10,10,5), 
-                          Enemy("Orc",12,4,5,10), 
-                          Enemy("Rat",1,1,75,5),
+enemylist = [Enemy("Goblin",6,2,0,20,5), 
+                          Enemy("Zombie",20,1,1,5,5), 
+                          Enemy("Skeleton",2,10,0,10,5), 
+                          Enemy("Orc",12,4,3,5,10), 
+                          Enemy("Rat",1,1,0,75,5),
                           ]
 
 #########################################    PATHS     #############################################################
 
 def shop():
-    Hero.inventory.append(sword)
-    print("shop enter")
+    os.system('clear')
+    shopInput = input(f"""
+Store
+Gold: {Hero.gold}
+1.) Enter
+2.) Leave 
+    
+    """)
+    if shopInput == "1":
+        buy1 = random.choice(shopList)
+        buy2 = random.choice(shopList)
+        buy3 = random.choice(shopList)
+        while buy1 == buy2 or buy1 == buy3 or buy2 == buy3:
+            buy1 = random.choice(shopList)
+            buy2 = random.choice(shopList)
+        
+            
+        buyInput = input(f"""
+Items
+1.) {buy1.name} - {buy1.description} - ${buy1.cost}
+2.) {buy2.name} - {buy2.description} - ${buy2.cost}
+3.) {buy3.name} - {buy3.description} - ${buy3.cost}
+    
+    """)
+        if buyInput == "1" and Hero.gold >= buy1.cost:
+            Hero.inventory.append(buy1)
+            Hero.gold - buy1.cost
+        elif buyInput == "2" and Hero.gold >= buy2.cost:
+            Hero.inventory.append(buy2)
+            Hero.gold - buy2.cost
+        elif buyInput == "3" and Hero.gold >= buy3.cost:
+            Hero.inventory.append(buy3)
+            Hero.gold - buy3.cost
+        
+        
+    elif shopInput == "2":
+        pass
     print(Hero.inventory)
-    combat(Hero,randomEnemy(enemylist))
-    # path()
+
 def buff():
-    pass
+    os.system('clear')
+    buffInput = input("""
+Fountain of Youth
+1.) Perma - Buff
+2.) Heal
+3.) Leave 
+    
+    """)
+    if buffInput == "1":
+        Hero.power = Hero.power + 2
+    elif buffInput == "2":
+        Hero.health = Hero.health + 5
+    elif buffInput == "3":
+        pass
+
 def risk():
-    pass
+    os.system('clear')
+    buffInput = input("""
+Fountain of Youth
+1.) Power for Health
+2.) Health for Power
+3.) Leave 
+    
+    """)
+    if buffInput == "1":
+        Hero.power = Hero.power + 2
+        Hero.health = Hero.health - 5
+    elif buffInput == "2":
+        Hero.health = Hero.health + 5
+        Hero.power = Hero.power - 2
+    elif buffInput == "3":
+        pass
+    
 def unknown():
-    pass
+    A = random.choice(list(paths.values()))
+    if A == combat:
+        A(Hero,randomEnemy(enemylist))
+    else:
+        A()
 
 #######################################     MAIN      ##############################################################
 
@@ -127,8 +213,8 @@ Welcome
 1.) Start
 2.) Load
 3.) Exit 
-    
-    """)
+
+""")
     if menuInput == "1":
         start()
     elif menuInput == "2":
@@ -140,7 +226,12 @@ Welcome
            
 def start():
     os.system('clear')
-    path()
+    counter= 0
+    while counter <= 5:
+        path()
+        counter += 1
+        
+    bossCombat()
  
 
 
