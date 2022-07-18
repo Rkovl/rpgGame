@@ -18,13 +18,13 @@ class Equipment:
         self.description = description
         self.cost = cost
         
-item1 = Equipment("Sword of Strenght","This sword gives you +2 to power",10)
-item2 = Equipment("Cape of Swift Rat","This cape gives you +5 to dodge",10)
-item3 = Equipment("Heart Crystal", "Gain 5 HP before combat encounter",10)
-item4 = Equipment("Havels Armor", "This armor gives you +2 to armor",10)
-item5 = Equipment("BloodThirster", "This sword gives you +1 to power per enemy fought",15)
+item1 = Equipment("Sword of Strenght","This sword gives you +1 to power",10)
+item2 = Equipment("Cape of Swift Rat","This cape gives you +3 to dodge",10)
+item3 = Equipment("Crystal Heart", "Gain 3 HP before combat encounter",10)
+item4 = Equipment("Havels Armor", "This armor gives you +1 to armor",15)
+item5 = Equipment("BloodThirster", "This sword gives you +1 to power per enemy fought",20)
 bloodThirster = 0
-item6 = Equipment("Midus's Crown", "This crown gives you +1 to gold per enemy encounter",15)
+item6 = Equipment("Midus's Crown", "This crown gives you +1 to gold per enemy encounter",20)
 
 shopList = [
     item1,
@@ -37,16 +37,20 @@ shopList = [
 
 
 def itemF1(unit):
-    unit.power = unit.power + 2
+    unit.power = unit.power + 1
         
 def itemF2(unit):
-    unit.dodge = unit.dodge + 5
+    unit.dodge = unit.dodge + 3
     
 def itemF3(unit):
-    unit.health = unit.health + 5
+    try:
+        unit.maxHealth = unit.maxHealth + 3
+    except:
+        pass
+    unit.health = unit.health + 3
     
 def itemF4(unit):
-    unit.armor = unit.armor + 2
+    unit.armor = unit.armor + 1
     
 def itemF5(unit):
     global bloodThirster
