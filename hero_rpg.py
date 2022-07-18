@@ -206,28 +206,32 @@ def combat(Player,Enemy):
         Enemy.status()
         print()
         print("What do you want to do?")
-        print(f"1. fight {Enemy.name}")
-        print("2. do nothing")
+        print(f"1. Fight {Enemy.name}")
+        print("2. Use Healing Pot")
+        print("3. do nothing")
         print("> ", end=' ')
         raw_input = input()
         if raw_input == "1":
             os.system('clear')
             Player.attack(Enemy)
         elif raw_input == "2":
+            useItem(Player)                
+        elif raw_input == "3":
             pass
         else:
             print("Invalid input {}".format(raw_input))
 
         if Enemy.alive():
             Enemy.attack(Player)
-    print("You pick up and item or gold the enemy had")
-    time.sleep(1.5)
+    
     if Player.alive():
         Player.gold = Player.gold + Enemy.gold
         Player.power = pcBasePower
         Player.dodge = pcBaseDodge
         Player.armor = pcBaseArmor
         Player.inventory.append(Enemy.inventory)
+        print("You pick up and item or gold the enemy had")
+        time.sleep(1.5)
     else:
         youDied(lives)
 
@@ -240,6 +244,26 @@ def bossCombat():
 
 def randomEnemy(enemylist):     
     return random.choice(enemylist)
+
+def useItem(Player):
+    if item7 in Player.inventory:
+        C = 0
+        for A in Player.inventory:
+            if A == item7:
+                if (Player.health + 10) > Player.maxHealth:
+                    B = Player.maxHealth - Player.health
+                    Player.health = Player.health + B
+                    print("You Healed")
+                    del Player.inventory[C]
+                    break;
+                else:
+                    Player.health = Player.health + 10
+                    print("You Healed")
+                    del Player.inventory[C]
+                    break;
+            C += 1
+    else:
+        print("You have no healing pots in inventory")
 
 Hero = Player("Hero",10,5,0,10,0,10)
 dLord = Boss("Necromancer",50,10,5,25,100)
@@ -503,11 +527,11 @@ def youDied(lives):
     lives -= 1
     if lives == 9:
         print("Right Before the final blow the enemy pause...")
-        time.sleep(3)
+        time.sleep(4)
         print("Your enemy offers you his hand in friendship")
-        time.sleep(2)
-        print("and stabs you into bits.... Good thing there was 10 of you")
         time.sleep(3)
+        print("and stabs you into bits.... Good thing there was 10 of you")
+        time.sleep(5)
         restart()
     elif lives >= 1:
         print("another one dead huh")
@@ -519,47 +543,47 @@ def youDied(lives):
 def playerToEnemy():
     if lives == 10:
         dpc1 = Enemy("The First Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in range(len(Hero.inventory)):
             dpc1.inventory.append(Hero.inventory[A])
         enemylist.append(dpc1)
     elif lives == 9:
         dpc2 = Enemy("The Second Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc2.inventory.append(Hero.inventory[A])
         enemylist.append(dpc2)
     elif lives == 8:
         dpc3 = Enemy("The Third Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc3.inventory.append(Hero.inventory[A])
         enemylist.append(dpc3)
     elif lives == 7:
         dpc4 = Enemy("The Forth Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc4.inventory.append(Hero.inventory[A])
         enemylist.append(dpc4)
     elif lives == 6:
         dpc5 = Enemy("The Fifth Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc5.inventory.append(Hero.inventory[A])
         enemylist.append(dpc5)
     elif lives == 5:
         dpc6 = Enemy("The Sixth Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc6.inventory.append(Hero.inventory[A])
         enemylist.append(dpc6)
     elif lives == 4:
         dpc7 = Enemy("The Seventh Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc7.inventory.append(Hero.inventory[A])
         enemylist.append(dpc7)
     elif lives == 3:
         dpc8 = Enemy("The Eighth Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in H(len(Hero.inventory)):
             dpc8.inventory.append(Hero.inventory[A])
         enemylist.append(dpc8)
     elif lives == 2:
         dpc9 = Enemy("The Ninth Warrior",Hero.maxHealth,Hero.power,Hero.armor,Hero.dodge,Hero.gold)
-        for A in Hero.inventory:
+        for A in (len(Hero.inventory)):
             dpc9.inventory.append(Hero.inventory[A])
         enemylist.append(dpc9)
   

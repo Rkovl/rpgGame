@@ -25,6 +25,7 @@ item4 = Equipment("Havels Armor", "This armor gives you +1 to armor",15)
 item5 = Equipment("BloodThirster", "This sword gives you +1 to power per enemy fought",20)
 bloodThirster = 0
 item6 = Equipment("Midus's Crown", "This crown gives you +1 to gold per enemy encounter",20)
+item7 = Equipment("Health Pot","A one time in combat use +10 health healing item ",10)
 
 shopList = [
     item1,
@@ -32,7 +33,8 @@ shopList = [
     item3,
     item4,
     item5,
-    item6
+    item6,
+    item7
 ]
 
 
