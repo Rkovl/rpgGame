@@ -1,58 +1,46 @@
-# RPG Game
-In this exercise, you will develop a hero RPG (*Role Playing Game*) using all of the cool new python knowledge you've acquired. This game will be created using **Object Oriented Programming**.
+# Draw.io
 
-The game starts off with 2 characters: a `hero` and a `goblin`. Each character will be given a starting health and starting value. 
-
-Each character also has a power that can be used to attack their opponent. In the initial scenario, the `hero's` opponent is the `goblin`, and the `goblin's` opponent is the `hero`.
-
-When either character attacks his/her opponent, the opponent's health will decrease by the amount of power of the attacking character.
-
-For example
->
->If the hero starts off with the following: 
->
->- health = 9
->- power = 4
->
->And the `goblin` starts off with the following:  
->
->- health = 7
->- power = 3
->
->Then when the hero attacks the goblin, the goblin's health will decrease by 4.
->
->The result of goblin's health after being attacked
->
->- health = 3  ==> (7 - 4)
->- power = 3
->
-
-Run following command to clone this repository onto your local computer
-
-1. Clone this repository: `git clone https://github.com/DigitalCraftsStudents/python-rpg-starter.git`
-2. `cd python-rpg-starter`
-3. `git init`
-4. `git add`
-5. `git commit -m 'rpg game'`
-6. Create a new repository *without* a README in **your** github account
-7. Follow the instructions to connect and push your local repo to your remote repository 
-    - `git remote remove origin`
-    - `git remote add origin [url of your repo]`
-    - `git push --set-upstream origin main`
+![OnPaste 20220906-111411](https://user-images.githubusercontent.com/107579894/188673022-8008bee9-9c69-4824-a09e-38577fe4f751.png)
 
 
-Use `hero_rpg.py`, located in this repository, as a starting point for your game.
+## About the project
 
-As you complete each step, commit, push, and tag the final working version. In the future we'll base a refactor off of one the steps.
+Draw.io is a website with a built in canvas paint style editor that allows you to create digital art with tools such as a standard paint bursh, line tool, cirle tool, paint bucket, and clear canvas tool. This images can be saved to a profile attached to profile and saved to your desktop.
 
-## RPG Game Part 1
+## Tech Stack
 
-Follow the link below to continue building new characters with new abilities to your game.
+* HTML
+* CSS
+* Javascript
+* Clodinary
+* Node.js
 
-- [RPG Part 1](./RPG-Part1.md)
+## Minimum Viable Product
 
-## RPG Game Part 2
+The minimum viable product for this website was the ability to create and store digital art on the users specific account.
 
-Follow the link below to continue building new characters with new abilities to your game.
+## Stretch Goals Complteted
 
-- [RPG Part 2](./RPG-Part2.md)
+* Ability to follow and unfollow other users
+* Ability to change profile pictures
+
+## Stretch Goals To Be Completed
+
+* Implements specific privileges for admin and basic users
+* Ability to see a feed of other users that you follows compiled artwork
+* Add additional quality of life fixes and tools to canvas
+
+## Screenshots of the webpage:
+
+## Dev Team
+
+[Austin Desana:](https://github.com/adesana)
+- Primary designer and UI/UX designer. Created a hue selector through javascript to select a color for the drawing. Created the profile page with a follow and unfollow button.
+
+[Ryan Kovlaske:](https://github.com/Rkovl)
+
+Primary developer for the canvas feature in JavaScript, setting up all aspects of drawing and connecting the canvas to the database to gather, change or add data; Using HTML, CSS, JS, Node, Express, PostgresSQL, EJS, Cookie-Session
+
+[Thomas Zimmerman:](https://github.com/clintwestwords)
+
+Primary developer for setting up the sequelize database associated with this webpage, set up passport functionality for user sessions and individual accounts, set up cloudinary image handling for node.js to give users a specific profile picture, added functionality for users to follow and unfollow each other, wrote this README file.
