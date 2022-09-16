@@ -14,7 +14,7 @@ A terminal run Python game that was made to familiarize oneself on Object use. T
 ## MVP (Minimum Viable Product)
 ***
 * Player vs Enemy Combat
-* A Win condition
+* A Win-Lose conditions
 * A in-game shop
 
 ## Stretch Goals Complteted
