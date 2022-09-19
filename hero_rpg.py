@@ -4,6 +4,7 @@ import time
 from Data import *
 # THE HOLY TEN
 lives = 10
+charge = 1
 ############################################    CLASSES     #####################################################
 
 class Units:
@@ -96,7 +97,7 @@ class Zombie(Enemy):
             return True
         else:
             A = random.randint(1,100)
-            if A <= 10:
+            if A <= 25:
                 self.health = 1
                 return True
             else:
@@ -269,7 +270,7 @@ Hero = Player("Hero",10,5,0,10,0,10)
 dLord = Boss("Necromancer",50,10,5,25,100)
 
 enemylist = [Goblin("Goblin",6,4,0,20,5), 
-                          Zombie("Zombie",12,1,1,5,5), 
+                          Zombie("Zombie",6,1,1,5,5), 
                           Skeleton("Skeleton",4,10,0,10,5), 
                           Orc("Orc",12,4,3,5,10), 
                           Rat("Rat",1,1,0,80,5),
@@ -454,7 +455,7 @@ _________          _______             _______  _               _________ ______
                                                                                            
 
 1.) Start
-2.) Load (not in)
+2.) Load 
 3.) Exit 
 
 """)

@@ -8,7 +8,7 @@
 #                           Enemy("Orc",12,4), 
 #                           Enemy("Rat",1,1),
 #                           ]
-charge = 1
+
 
 
 
