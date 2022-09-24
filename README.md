@@ -5,7 +5,7 @@
 
 ## About the project
 ***
-A terminal run Python game that was made to familiarize oneself on Object use. The main gameplay loop is you pick between three randomly chosen routes five times at which point you will fight the boss. If you happen to beat the boss you win, otherwise your past character becomes an enemy with all your items. If in your next run you kill your past self you recieve all those past items making you exponentially stronger for your next run at the boss.
+A terminal run Python game that was made to familiarize myself on Object use. The main gameplay loop is you pick between three randomly chosen routes five times at which point you will fight the boss. If you happen to beat the boss you win, otherwise your past character becomes an enemy with all your items. If in your next run you kill your past self you recieve all those past items making you exponentially stronger for your next run at the boss.
 
 ## Tech Stack
 ***
