@@ -37,5 +37,5 @@ A terminal run Python game that was made to familiarize oneself on Object use. T
 
 [Ryan Kovlaske:](https://github.com/Rkovl)
 
-My first project every done and I would love to go back and clean it up 
+This is my first project and I would love to go back and clean it up at some point
 
