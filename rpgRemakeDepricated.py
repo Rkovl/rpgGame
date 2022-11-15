@@ -10,42 +10,44 @@ fps = 60
 
 #game window
 bottom_panel = 0
-screen_width = 1450
-screen_height = 900 + bottom_panel
+screen_width = 1360
+screen_height = 768 + bottom_panel
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Battle')
 
 
-#load images
+#load images ---------------------------------------------------------- BACKROUND-----------------------------------------------------
 #background image
 background_img = pygame.image.load('img/background/background.png').convert_alpha()
 #panel image
 # panel_img = pygame.image.load('img/Icons/panel.png').convert_alpha()
 
-
-#define fonts
-font = pygame.font.SysFont('Times New Roman', 26)
-
-#define colours
-red = (255, 0, 0)
-green = (0, 255, 0)
-black = (0, 0, 0)
-
-#create function for drawing text
-def draw_text(text, font, text_col, x, y):
-	img = font.render(text, True, text_col)
-	screen.blit(img, (x, y))
-
-
 #function for drawing background
-def draw_bg():
-	screen.blit(background_img, (0, 0))
+def draw_bg(img):
+	screen.blit(img, (0, 0))
 
 
 #function for drawing panel
 # def draw_panel():
 # 	screen.blit(panel_img, (0, screen_height - bottom_panel))
+
+
+#define fonts------------------------------------------------------------ FONTS------------------------------------------------
+healthFont = pygame.font.SysFont('Times New Roman', 26)
+titleFont = pygame.font.SysFont('Times New Roman', 100)
+buttonFont = pygame.font.SysFont('Times New Roman', 42)
+
+#define colours
+red = (255, 0, 0)
+green = (0, 255, 0)
+black = (0, 0, 0)
+white = (255, 255, 255)
+
+#create function for drawing text
+def draw_text(text, font, text_col, x, y):
+	img = font.render(text, True, text_col)
+	screen.blit(img, (x, y))
 
 
 #-----------------------------------------------------------------CLASSES-------------------------------------------
@@ -72,7 +74,7 @@ class Units:
         ratio = self.hp / self.maxhp
         pygame.draw.rect(screen, red, (x - 120, y - 225, 210, 30))
         pygame.draw.rect(screen, green, (x - 120, y - 225, 210 * ratio, 30))
-        text = font.render(f'{self.name} HP: {self.hp}/{self.maxhp}', True, 100)
+        text = healthFont.render(f'{self.name} HP: {self.hp}/{self.maxhp}', True, 100)
         screen.blit(text, (x - 120, y - 225))
         
         
@@ -106,6 +108,24 @@ class Units:
 {self.power} power  -   {self.armor} armor  -   {self.dodge} dodge
 """)
         
+  
+#-----------------------------------------------------------------Main Menu--------------------------------------------       
+
+
+def mainMenu():
+    pygame.draw.rect(screen, black, (0, 0, screen_width, screen_height))
+    draw_text("The Holy Ten", titleFont,white,screen_width/3,100)
+    
+    pygame.draw.rect(screen, white, (screen_width/3, screen_height/2, screen_width/5, screen_height/8))
+    pygame.draw.rect(screen, white, (screen_width/3, screen_height/1.5, screen_width/5, screen_height/8))
+    draw_text("Start", buttonFont,black,screen_width/3,screen_height/2)
+    draw_text("Quit", buttonFont,black,screen_width/3,screen_height/1.5)
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            
+    pygame.display.update()
         
 #-----------------------------------------------------Units---------------------------------------------------     
 hero = Units("Hero",10,5,0,10,0) 
@@ -135,17 +155,20 @@ run = True
 
 # pygame.quit()
 
+#---------------------------------------------------------------Game Screen -----------------------------------------------
+
 while run :
     
     clock.tick(fps)
     
-    draw_bg()
+    draw_bg(background_img)
     
+    mainMenu()
     # draw_panel()
     
-    hero.draw(350,400)
+    # hero.draw(350,400)
     
-    goblin.draw(1100,400)
+    # goblin.draw(1100,400)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
