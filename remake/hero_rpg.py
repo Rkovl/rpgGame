@@ -1,8 +1,8 @@
 import random
 import os
 import time
-from Units import *
-# from Items import *
+# from Units import *
+from Items import *
 # THE HOLY TEN
 lives = 10
 charge = 1
@@ -11,16 +11,19 @@ charge = 1
   
 ###########################################     COMBAT      ######################################################      
                        
-def startCombat(Player,Enemy):
-    global pcBasePower, pcBaseDodge, pcBaseArmor
-    pcBasePower = Player.power
-    pcBaseDodge = Player.dodge
-    pcBaseArmor = Player.armor
-    Player.equip()
-    Enemy.equip()
+def startCombat(Player):
+    for i in Player.inventory:
+        if "pre" in i.type:
+            i.ability()
+    # global pcBasePower, pcBaseDodge, pcBaseArmor
+    # pcBasePower = Player.power
+    # pcBaseDodge = Player.dodge
+    # pcBaseArmor = Player.armor
+    # Player.equip()
+    # Enemy.equip()
     
 def combat(Player,Enemy):
-    startCombat(Player,Enemy)
+    startCombat(Player)
     while Enemy.alive() and Player.alive():
         Player.status()
         Enemy.status()
@@ -46,10 +49,15 @@ def combat(Player,Enemy):
     
     if Player.alive():
         Player.gold = Player.gold + Enemy.gold
-        Player.power = pcBasePower
-        Player.dodge = pcBaseDodge
-        Player.armor = pcBaseArmor
-        Player.inventory.append(Enemy.inventory)
+        for i in Player.inventory:
+            if "aft" in i.type:
+                i.ability()
+
+        if len(Enemy.inventory): ############################################ TEST THIS #####################################
+            Player.inventory.append(Enemy.inventory)
+            for i in Enemy.inventory:
+                if "out" in i.type:
+                    i.ability()
         print("You pick up and item or gold the enemy had")
         time.sleep(1.5)
     else:
@@ -65,7 +73,7 @@ def bossCombat():
 def randomEnemy(enemylist):     
     return random.choice(enemylist)
 
-def useItem(Player):
+def useItem(Player): ################################################################ FIX THIS #############################################
     if item7 in Player.inventory:
         C = 0
         for A in Player.inventory:
@@ -117,12 +125,18 @@ Items
         if buyInput == "1" and Hero.gold >= buy1.cost:
             Hero.inventory.append(buy1)
             Hero.gold - buy1.cost
+            if "out" in buy1.type:
+                buy1.ability()
         elif buyInput == "2" and Hero.gold >= buy2.cost:
             Hero.inventory.append(buy2)
             Hero.gold - buy2.cost
+            if "out" in buy2.type:
+                buy2.ability()
         elif buyInput == "3" and Hero.gold >= buy3.cost:
             Hero.inventory.append(buy3)
             Hero.gold - buy3.cost
+            if "out" in buy3.type:
+                buy3.ability()
         
         
     elif shopInput == "2":

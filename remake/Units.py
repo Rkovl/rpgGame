@@ -1,7 +1,7 @@
 import random
 import os
 import time
-from Items import *
+
 
 class Units:
     def __init__(self,name,health,power,armor,dodge,gold):
@@ -42,44 +42,85 @@ class Units:
 {self.power} power  -   {self.armor} armor  -   {self.dodge} dodge
 """)
         
-    def equip(self):
-        if item1 in self.inventory:
-            itemF1(self)
+    # def equip(self):
+    #     if item1 in self.inventory:
+    #         itemF1(self)
 
-        if item2 in self.inventory:
-            itemF2(self)
+    #     if item2 in self.inventory:
+    #         itemF2(self)
         
-        if item3 in self.inventory:
-            itemF3(self)
+    #     if item3 in self.inventory:
+    #         itemF3(self)
             
-        if item4 in self.inventory:
-            itemF4(self)
+    #     if item4 in self.inventory:
+    #         itemF4(self)
             
-        if item5 in self.inventory:
-            itemF5(self)
+    #     if item5 in self.inventory:
+    #         itemF5(self)
             
-        if item6 in self.inventory:
-            itemF6(self)
+    #     if item6 in self.inventory:
+    #         itemF6(self)
             
 class Player(Units):
-    def __init__(self,name,health,power,armor,dodge,gold,maxHealth):          
+    def __init__(self,name,health,power,armor,dodge,gold):          
         super(Player,self).__init__(name,health,power,armor,dodge,gold)
-        self.maxHealth = maxHealth
+        self.maxHealth = health
+        self.xPower = 0
+        self.xArmor = 0
+        self.xDodge = 0
 
-class Enemy(Units):
-    pass         
-
-class Goblin(Enemy):
     def attack(self,unit): 
         A = random.randint(1,100)
+        power = self.power + self.xPower
         if A < unit.dodge:
             print("The {} dodged!!".format(unit.name))
             return True
         else:
-            damage = random.randint(int(self.power / 4), self.power)
+            damage = random.randint(int(power / 2), power)
             if damage > unit.armor:
                 unit.health -= (damage - unit.armor)  #damage to target of attacks health based on power range
                 print("The {} does {} damage.".format(self.name, damage - unit.armor))
+            else:
+                 unit.health -= 1
+                 print("The {} does 1 damage due to armor.".format(self.name))
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False
+        
+
+class Enemy(Units):
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        dodge = unit.dodge + unit.xDodge
+        armor = unit.armor + unit.xArmor
+        if A < dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            damage = random.randint(int(self.power / 2), self.power)
+            if damage > armor:
+                unit.health -= (damage - armor)  #damage to target of attacks health based on power range
+                print("The {} does {} damage.".format(self.name, damage - armor))
+            else:
+                 unit.health -= 1
+                 print("The {} does 1 damage due to armor.".format(self.name))
+            if unit.alive() == False:
+                print(f"{unit.name} is dead.")
+            return False         
+
+class Goblin(Enemy):
+    def attack(self,unit): 
+        A = random.randint(1,100)
+        dodge = unit.dodge + unit.xDodge
+        armor = unit.armor + unit.xArmor
+        if A < dodge:
+            print("The {} dodged!!".format(unit.name))
+            return True
+        else:
+            damage = random.randint(int(self.power / 4), self.power)
+            if damage > armor:
+                unit.health -= (damage - armor)  #damage to target of attacks health based on power range
+                print("The {} does {} damage.".format(self.name, damage - armor))
             else:
                  unit.health -= 1
                  print("The {} does 1 damage due to armor.".format(self.name))
@@ -102,15 +143,17 @@ class Zombie(Enemy):
 class Skeleton(Enemy):
     def attack(self,unit): 
         A = random.randint(1,100)
-        if A < unit.dodge:
+        dodge = unit.dodge + unit.xDodge
+        armor = unit.armor + unit.xArmor
+        if A < dodge:
             print("The {} dodged!!".format(unit.name))
             return True
         else:
             B = random.randint(1,100)
             damage = random.randint(int(self.power / 2), self.power)
-            if damage > unit.armor:
-                unit.health -= (damage - unit.armor)  #damage to target of attacks health based on power range
-                print("The {} does {} damage.".format(self.name, damage - unit.armor))
+            if damage > armor:
+                unit.health -= (damage - armor)  #damage to target of attacks health based on power range
+                print("The {} does {} damage.".format(self.name, damage - armor))
             else:
                  unit.health -= 1
                  print("The {} does 1 damage due to armor.".format(self.name))
@@ -122,10 +165,12 @@ class Skeleton(Enemy):
             return False   
 
 class Orc(Enemy):
-    def attack(self,unit): 
+    def attack(self,unit):
+        dodge = unit.dodge + unit.xDodge
+        armor = unit.armor + unit.xArmor
         global charge
         A = random.randint(1,100)
-        if A < unit.dodge:
+        if A < dodge:
             print("The {} dodged!!".format(unit.name))
             return True
         else:
@@ -135,9 +180,9 @@ class Orc(Enemy):
                 print(f"The {self.name} is charging")
             else:
                 damage = random.randint(int(self.power / 2), self.power)
-                if (damage*charge) > unit.armor:
-                    unit.health -= ((damage*charge) - unit.armor)  #damage to target of attacks health based on power range
-                    print("The {} does {} damage.".format(self.name, damage - unit.armor))
+                if (damage*charge) > armor:
+                    unit.health -= ((damage*charge) - armor)  #damage to target of attacks health based on power range
+                    print("The {} does {} damage.".format(self.name, damage - armor))
                     charge = 1
                 else:
                     unit.health -= (1)
@@ -148,15 +193,17 @@ class Orc(Enemy):
 
 class Rat(Enemy):
     def attack(self,unit): 
+        dodge = unit.dodge + unit.xDodge
+        armor = unit.armor + unit.xArmor
         A = random.randint(1,200)
-        if A < unit.dodge:
+        if A < dodge:
             print("The {} dodged!!".format(unit.name))
             return True
         else:
             damage = random.randint(int(self.power), self.power)
-            if damage > unit.armor:
-                unit.health -= (damage - unit.armor)  #damage to target of attacks health based on power range
-                print("The {} does {} damage.".format(self.name, damage - unit.armor))
+            if damage > armor:
+                unit.health -= (damage - armor)  #damage to target of attacks health based on power range
+                print("The {} does {} damage.".format(self.name, damage - armor))
             else:
                  unit.health -= 1
                  print("The {} does 1 damage due to armor.".format(self.name))
@@ -166,15 +213,17 @@ class Rat(Enemy):
    
 class Vampire(Enemy):
     def attack(self,unit): 
+        dodge = unit.dodge + unit.xDodge
+        armor = unit.armor + unit.xArmor
         A = random.randint(1,100)
-        if A < unit.dodge:
+        if A < dodge:
             print("The {} dodged!!".format(unit.name))
             return True
         else:
             damage = random.randint(int(self.power / 4), self.power)
-            if damage > unit.armor:
-                unit.health -= (damage - unit.armor)  #damage to target of attacks health based on power range
-                print("The {} does {} damage.".format(self.name, damage - unit.armor))
+            if damage > armor:
+                unit.health -= (damage - armor)  #damage to target of attacks health based on power range
+                print("The {} does {} damage.".format(self.name, damage - armor))
                 self.health = self.health + 2
             else:
                  unit.health -= 1
@@ -188,7 +237,7 @@ class Boss(Enemy):
     pass
 
 
-Hero = Player("Hero",10,5,0,10,0,10)
+Hero = Player("Hero",10,5,0,10,0)
 dLord = Boss("Necromancer",50,10,5,25,100)
 
 enemylist = [Goblin("Goblin",6,4,0,20,5), 
